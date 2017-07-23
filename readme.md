@@ -1,6 +1,6 @@
 # ganalytics [![Build Status](https://travis-ci.org/lukeed/ganalytics.svg?branch=master)](https://travis-ci.org/lukeed/ganalytics)
 
-> ...
+> Tiny, client-side module for simple tracking with Google Analytics
 
 ## Install
 

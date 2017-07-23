@@ -1,7 +1,7 @@
 {
   "name": "ganalytics",
   "version": "0.0.0",
-  "description": "WIP",
+  "description": "Tiny, client-side module for simple tracking with Google Analytics",
   "repository": "lukeed/ganalytics",
   "module": "dist/ganalytics.es.js",
   "main": "dist/ganalytics.js",
