@@ -1,31 +1,42 @@
 const fs = require('fs');
-const { resolve } = require('path');
+const { rollup } = require('rollup');
 const { minify } = require('uglify-js');
 const pretty = require('pretty-bytes');
 const sizer = require('gzip-size');
 const pkg = require('./package');
 
-const dist = resolve('dist');
-const entry = resolve('src/index.js');
+const umd = pkg['umd:main'];
 
-if (!fs.existsSync(dist)) {
-	fs.mkdirSync(dist);
-}
+rollup({
+	entry: 'src/index.js',
+	useStrict: false
+}).then(bun => {
+	bun.write({
+		format: 'cjs',
+		dest: pkg.main,
+		exports: 'default'
+	});
 
-fs.readFile(entry, (_, buf) => {
-	// copy as `es` module
-	fs.writeFile(resolve(pkg.module), buf);
+	bun.write({
+		format: 'es',
+		dest: pkg.module,
+		exports: 'default'
+	});
 
-	// transform to `cjs` module
-	const data = buf.toString().replace('export default', 'module.exports =');
-	fs.writeFile(resolve(pkg.main), data);
+	bun.write({
+		dest:umd,
+		format: 'umd',
+		exports: 'default',
+		moduleName: pkg['umd:name']
+	}).then(_ => {
+		const data = fs.readFileSync(umd, 'utf8');
 
-	// produce minified output
-	const { code } = minify(data, { fromString:true });
-	const file = resolve(pkg.main.replace('.js', '.min.js'));
-	fs.writeFile(file, code);
+		// produce minified output
+		const { code } = minify(data, { fromString:true });
+		fs.writeFileSync(umd, code);
 
-	// output gzip size
-	const int = sizer.sync(code);
-	console.log(`> gzip size: ${ pretty(int) }`);
+		// output gzip size
+		const int = sizer.sync(code);
+		console.log(`> gzip size: ${ pretty(int) }`);
+	});
 });
