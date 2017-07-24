@@ -25,8 +25,12 @@
     "dist"
   ],
   "keywords": [
+    "ga",
+    "google",
+    "analytics",
+    "google-analytics",
+    "ganalytics"
   ],
-  "keywords": [],
   "devDependencies": {
     "gzip-size": "^3.0.0",
     "pretty-bytes": "^4.0.2",
