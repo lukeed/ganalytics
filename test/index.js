@@ -1,7 +1,11 @@
-const test = require('tape');
+['navigator', 'document', 'window', 'location', 'localStorage'].forEach(x => global[x] = {});
+
+const assert = require('assert');
 const fn = require('../dist/ganalytics');
 
-test('ganalytics', t => {
-	t.equal(typeof fn, 'function', 'exports a function');
-	t.end();
+describe('ganalytics', () => {
+	it('should export a function', () => {
+		assert.equal(typeof fn, 'function');
+	});
+	// todo: ....
 });
