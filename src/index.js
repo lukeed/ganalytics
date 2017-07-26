@@ -24,7 +24,6 @@ function assign(tar) {
 
 function GA(ua, opts) {
 	opts = opts || {};
-	this.get = opts.get || window.fetch.bind();
 	this.args = assign({ tid:ua, cid:UID }, opts);
 	this.send('pageview');
 }
@@ -35,7 +34,7 @@ GA.prototype.send = function (type, opts) {
 		opts = { dl:location.href, dt:document.title };
 	}
 	var obj = assign({ t:type }, this.args, opts, { z:Date.now() });
-	this.get(encode(obj)); // construct url; send POST
+	new Image().src = encode(obj); // dispatch a GET
 }
 
 export default GA;
