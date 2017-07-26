@@ -13,15 +13,6 @@ function encode(obj) {
 	return str;
 }
 
-function assign(tar) {
-	var k, src, i=1;
-	for (; i < arguments.length; i++) {
-		src = arguments[i];
-		for (k in src) tar[k] = src[k];
-	}
-	return tar;
-}
-
 function GA(ua, opts) {
 	opts = opts || {};
 	this.args = assign({ tid:ua, cid:UID }, opts);
@@ -33,7 +24,7 @@ GA.prototype.send = function (type, opts) {
 	if (type === 'pageview' && !opts) {
 		opts = { dl:location.href, dt:document.title };
 	}
-	var obj = assign({ t:type }, this.args, opts, { z:Date.now() });
+	var obj = Object.assign({ t:type }, this.args, opts, { z:Date.now() });
 	new Image().src = encode(obj); // dispatch a GET
 }
 
