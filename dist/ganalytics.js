@@ -17,7 +17,7 @@ function encode(obj) {
 
 function GA(ua, opts) {
 	opts = opts || {};
-	this.args = assign({ tid:ua, cid:UID }, opts);
+	this.args = Object.assign({ tid:ua, cid:UID }, opts);
 	this.send('pageview');
 }
 
