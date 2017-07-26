@@ -8,6 +8,8 @@ This module exposes three module definitions:
 * **CommonJS**: `dist/ganalytics.js`
 * **UMD**: `dist/ganalytics.min.js`
 
+As of **v2.0.0**, `ganalytics` makes use of `Object.assign`, which means that Internet Explorer is not supported by default. However, Babel users may install [`babel-plugin-transform-object-assign`](https://www.npmjs.com/package/babel-plugin-transform-object-assign) to quickly regain IE compatibility!
+
 
 ## Install
 
@@ -70,31 +72,6 @@ Type: `String`
 
 Indicates the data source type of the hit; eg `web` or `app`. See [Data Source](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#ds).
 
-#### options.get
-Type: `Function`<br>
-Default: `window.fetch`
-
-Provide a custom `GET` requestor. It needs to accept a URL as its first and only parameter.
-
-> **Note:** By default, we use `window.fetch` which has _somewhat_ limited [browser support](http://caniuse.com/#feat=fetch).
-
-You may want to checkout [`unfetch`](https://github.com/developit/unfetch) or provide your current AJAX/XHR library of choice, like [`axios`](https://github.com/mzabriskie/axios).
-
-```js
-import fetch from 'unfetch';
-import GAnalytics from 'ganalytics';
-
-const ga = new GAnalytics('UA-XXXXXXXX-X', { get:fetch });
-```
-
-```js
-const axios = require('axios');
-const GAnalytics = require('ganalytics');
-
-const ga = new GAnalytics('UA-XXXXXXXX-X', { get:axios });
-// or
-const ga = new GAnalytics('UA-XXXXXXXX-X', { get:axios.get });
-```
 
 ### ga.send(type, params)
 
