@@ -34,7 +34,7 @@ rollup({
 		const data = fs.readFileSync(umd, 'utf8');
 
 		// produce minified output
-		const { code } = minify(data, { fromString:true });
+		const { code } = minify(data);
 		fs.writeFileSync(umd, code);
 
 		// output gzip size
