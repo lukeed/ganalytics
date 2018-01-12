@@ -8,28 +8,28 @@ const pkg = require('./package');
 const umd = pkg['umd:main'];
 
 rollup({
-	entry: 'src/index.js',
-	useStrict: false
+	strict: false,
+	input: 'src/index.js'
 }).then(bun => {
 	bun.write({
 		format: 'cjs',
-		dest: pkg.main,
+		file: pkg.main,
 		exports: 'default'
 	});
 
 	bun.write({
 		format: 'es',
-		dest: pkg.module,
+		file: pkg.module,
 		exports: 'default'
 	});
 
 	bun.write({
-		dest:umd,
+		file:umd,
 		format: 'umd',
 		exports: 'default',
-		moduleName: pkg['umd:name']
+		name: pkg['umd:name']
 	}).then(_ => {
-		const data = fs.readFileSync(umd, 'utf8');
+		const data = fs.readFileSync(pkg.main, 'utf8');
 
 		// produce minified output
 		const { code } = minify(data, { fromString:true });
