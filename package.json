@@ -1,6 +1,6 @@
 {
   "name": "ganalytics",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "umd:name": "GAnalytics",
   "repository": "lukeed/ganalytics",
   "description": "A tiny (358B) client-side module for tracking with Google Analytics",
