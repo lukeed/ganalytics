@@ -1,5 +1,4 @@
 var KEY = 'ga:user';
-var DNT = navigator.doNotTrack || navigator.msDoNotTrack || window.doNotTrack;
 var UID = (localStorage[KEY] = localStorage[KEY] || Math.random() + '.' + Math.random());
 
 // modified `obj-str`
@@ -20,7 +19,6 @@ function GA(ua, opts) {
 }
 
 GA.prototype.send = function (type, opts) {
-	if (DNT) return;
 	if (type === 'pageview' && !opts) {
 		opts = { dl:location.href, dt:document.title };
 	}
