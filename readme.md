@@ -1,6 +1,6 @@
 # ganalytics [![Build Status](https://travis-ci.org/lukeed/ganalytics.svg?branch=master)](https://travis-ci.org/lukeed/ganalytics)
 
-> A tiny (400B) client-side module for tracking with Google Analytics
+> A tiny (358B) client-side module for tracking with Google Analytics
 
 This module exposes three module definitions:
 
@@ -8,7 +8,7 @@ This module exposes three module definitions:
 * **CommonJS**: `dist/ganalytics.js`
 * **UMD**: `dist/ganalytics.min.js`
 
-As of **v2.0.0**, `ganalytics` makes use of `Object.assign`, which means that Internet Explorer is not supported by default. However, Babel users may install [`babel-plugin-transform-object-assign`](https://www.npmjs.com/package/babel-plugin-transform-object-assign) to quickly regain IE compatibility!
+_Please see [Releases](https://github.com/lukeed/ganalytics/releases) for changelog!_
 
 
 ## Install

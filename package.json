@@ -3,7 +3,7 @@
   "version": "2.0.1",
   "umd:name": "GAnalytics",
   "repository": "lukeed/ganalytics",
-  "description": "A tiny (400B) client-side module for tracking with Google Analytics",
+  "description": "A tiny (358B) client-side module for tracking with Google Analytics",
   "umd:main": "dist/ganalytics.min.js",
   "module": "dist/ganalytics.es.js",
   "main": "dist/ganalytics.js",
