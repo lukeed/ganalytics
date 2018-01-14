@@ -31,6 +31,11 @@ ga.send('pageview', { dt:'Foobar', dp:'/foo' });
 ga.send('event', { ec:'Video', ea:'Play', el:'Home Hero' });
 ```
 
+`pageview` event is tracked on initialisation, to avoid pass `true` as a third parameter.
+
+```js
+const ga = new GAnalytics('UA-XXXXXXXX-X', { aid:1 }, true);
+```
 
 ## API
 
