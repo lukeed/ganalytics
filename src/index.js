@@ -1,3 +1,4 @@
+var localStorage = typeof localStorage !== "undefined" ? localStorage : {};
 var KEY = 'ga:user';
 var UID = (localStorage[KEY] = localStorage[KEY] || Math.random() + '.' + Math.random());
 
