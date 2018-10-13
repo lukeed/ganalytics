@@ -1,44 +1,27 @@
 const fs = require('fs');
-const { rollup } = require('rollup');
+const mkdir = require('mk-dirs');
 const pretty = require('pretty-bytes');
 const { minify } = require('terser');
 const sizer = require('gzip-size');
 const pkg = require('./package');
 
-const umd = pkg['umd:main'];
+let data = fs.readFileSync('src/index.js', 'utf8');
 
-rollup({
-	input: 'src/index.js'
-}).then(bun => {
-	bun.write({
-		format: 'cjs',
-		file: pkg.main,
-		exports: 'default',
-		strict: false
-	});
+mkdir('dist').then(() => {
+	// Copy as is for ESM
+	fs.writeFileSync(pkg.module, data);
 
-	bun.write({
-		format: 'es',
-		file: pkg.module,
-		exports: 'default',
-		strict: false
-	});
+	// Mutate exports for CJS
+	data = data.replace(/export default/, 'module.exports =');
+	fs.writeFileSync(pkg.main, data);
 
-	bun.write({
-		file:umd,
-		format: 'umd',
-		exports: 'default',
-		name: pkg['umd:name'],
-		strict: false
-	}).then(_ => {
-		const data = fs.readFileSync(umd, 'utf8');
+	// Minify & print gzip-size
+	let { code } = minify(data, { toplevel:true });
+	console.log(`> gzip size: ${pretty(sizer.sync(code))}`);
 
-		// produce minified output
-		const { code } = minify(data);
-		fs.writeFileSync(umd, code);
-
-		// output gzip size
-		const int = sizer.sync(code);
-		console.log(`> gzip size: ${ pretty(int) }`);
-	});
+	// Write UMD bundle
+	let name = pkg['umd:name'];
+	let UMD = `!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):e.${name}=t()}(this,function(){`;
+	UMD += code.replace(/module.exports=/, 'return ') + '});';
+	fs.writeFileSync(pkg.unpkg, UMD);
 });

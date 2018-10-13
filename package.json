@@ -33,9 +33,9 @@
   ],
   "devDependencies": {
     "gzip-size": "^3.0.0",
+    "mk-dirs": "^1.0.0",
     "mocha": "^3.4.2",
     "pretty-bytes": "^4.0.2",
-    "rollup": "^0.66.6",
     "terser": "^3.10.0"
   }
 }
