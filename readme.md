@@ -34,7 +34,7 @@ ga.send('event', { ec:'Video', ea:'Play', el:'Home Hero' });
 
 ## API
 
-### GAnalytics(trackerID, options)
+### GAnalytics(trackerID, options, toWait)
 
 #### trackerID
 Type: `String`
@@ -71,6 +71,12 @@ Specifies the application verison. See [Application Version](https://developers.
 Type: `String`
 
 Indicates the data source type of the hit; eg `web` or `app`. See [Data Source](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#ds).
+
+#### toWait
+Type: `Boolean`<br>
+Default: `false`
+
+When truthy, a `pageview` event **will not** be sent immediately upon initialization.
 
 
 ### ga.send(type, params)
