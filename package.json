@@ -4,8 +4,8 @@
   "umd:name": "GAnalytics",
   "repository": "lukeed/ganalytics",
   "description": "A tiny (358B) client-side module for tracking with Google Analytics",
-  "umd:main": "dist/ganalytics.min.js",
-  "module": "dist/ganalytics.es.js",
+  "unpkg": "dist/ganalytics.min.js",
+  "module": "dist/ganalytics.mjs",
   "main": "dist/ganalytics.js",
   "license": "MIT",
   "author": {
