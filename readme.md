@@ -1,10 +1,10 @@
 # ganalytics [![Build Status](https://travis-ci.org/lukeed/ganalytics.svg?branch=master)](https://travis-ci.org/lukeed/ganalytics)
 
-> A tiny (358B) client-side module for tracking with Google Analytics
+> A tiny (323B) client-side module for tracking with Google Analytics
 
 This module exposes three module definitions:
 
-* **ES Module**: `dist/ganalytics.es.js`
+* **ES Module**: `dist/ganalytics.mjs`
 * **CommonJS**: `dist/ganalytics.js`
 * **UMD**: `dist/ganalytics.min.js`
 
@@ -24,6 +24,8 @@ $ npm install --save ganalytics
 const GAnalytics = require('ganalytics');
 
 const ga = new GAnalytics('UA-XXXXXXXX-X', { aid:1 });
+// or
+const ga = GAnalytics('UA-XXXXXXXX-X', { aid:1 });
 
 ga.send('pageview');
 ga.send('pageview', { dt:'Foobar', dp:'/foo' });
