@@ -12,10 +12,10 @@ function encode(obj) {
 	return str;
 }
 
-function GA(ua, opts) {
+function GA(ua, opts, toWait) {
 	opts = opts || {};
 	this.args = Object.assign({ tid:ua, cid:UID }, opts);
-	this.send('pageview');
+	toWait || this.send('pageview');
 }
 
 GA.prototype.send = function (type, opts) {
