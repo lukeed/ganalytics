@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { rollup } = require('rollup');
-const { minify } = require('uglify-js');
 const pretty = require('pretty-bytes');
+const { minify } = require('terser');
 const sizer = require('gzip-size');
 const pkg = require('./package');
 
