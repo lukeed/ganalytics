@@ -1,23 +1,24 @@
 var KEY = 'ga:user';
 var UID = (localStorage[KEY] = localStorage[KEY] || Math.random() + '.' + Math.random());
 
-function GA(ua, opts, toWait) {
+export default function (ua, opts, toWait) {
 	opts = opts || {};
-	this.args = Object.assign({ tid:ua, cid:UID }, opts);
-	toWait || this.send('pageview');
+	var args = Object.assign({ tid:ua, cid:UID }, opts);
+
+	function send(type, opts) {
+		if (type === 'pageview' && !opts) {
+			opts = { dl:location.href, dt:document.title };
+		}
+		var k, str='https://www.google-analytics.com/collect?v=1';
+		var obj = Object.assign({ t:type }, args, opts, { z:Date.now() });
+		for (k in obj) {
+			// modified `obj-str` behavior
+			if (obj[k]) str += ('&' + k + '=' + encodeURIComponent(obj[k]));
+		}
+		new Image().src = str; // dispatch a GET
+	}
+
+	toWait || send('pageview');
+
+	return { args, send };
 }
-
-GA.prototype.send = function (type, opts) {
-	if (type === 'pageview' && !opts) {
-		opts = { dl:location.href, dt:document.title };
-	}
-	var obj = Object.assign({ t:type }, this.args, opts, { z:Date.now() });
-	var k, str='https://www.google-analytics.com/collect?v=1';
-	for (k in obj) {
-		// modified `obj-str` behavior
-		if (obj[k]) str += ('&' + k + '=' + encodeURIComponent(obj[k]));
-	}
-	new Image().src = str; // dispatch a GET
-};
-
-export default GA;
