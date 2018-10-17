@@ -52,6 +52,33 @@ test(`localStorage['${KEY}']`, t => {
 
 	t.end();
 });
+
+test('ga.send :: oncreate', t => {
+	global._SENT_ = {}; // reset
+	global.localStorage = {}; // reset
+
+	global.document.title = 'Hello World';
+	global.location.href = 'http://example.com/hello-world';
+
+	t.true(isEmpty(_SENT_), '(reset _SENT_)');
+	t.true(isEmpty(localStorage), '(reset localStorage)');
+
+	GA('UA-STRING');
+
+	t.false(isEmpty(_SENT_), 'GA instance sent data immediately');
+
+	let src = _SENT_.src;
+	t.ok(src, '~> used an Image and set `src` attribute');
+	t.true(src.startsWith('https://www.google-analytics.com/collect?v=1'), '~~> sent to Google-Analytics API');
+	t.true(src.includes('&tid=UA-STRING'), '~~> includes the UA idenfitifer (`tid`)');
+	t.true(src.includes('&t=pageview'), '~~> includes the event type: "pageview" (`t`)');
+	t.true(src.includes(`&cid=${localStorage[KEY]}`), '~~> includes the generated user-idenfitifer (`cid`)');
+	t.true(src.includes('&z='), '~~> includes unique timestamp (`z` cache-buster)');
+	t.true(src.includes(`&dt=${encodeURIComponent(document.title)}`), '~~> includes the `document.title` value (`dt`)');
+	t.true(src.includes(`&dl=${encodeURIComponent(location.href)}`), '~~> includes the `location.href` value (`dl`)');
+
+	t.end();
+});
 	});
 	// todo: ....
 });
