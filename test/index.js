@@ -79,6 +79,21 @@ test('ga.send :: oncreate', t => {
 
 	t.end();
 });
+
+test('ga.send :: toWait', t => {
+	global._SENT_ = {}; // reset
+	global.localStorage = {}; // reset
+
+	t.true(isEmpty(_SENT_), '(reset _SENT_)');
+	t.true(isEmpty(localStorage), '(reset localStorage)');
+
+	let ctx = GA('UA-STRING', null, true);
+	t.true(isEmpty(_SENT_), 'did NOT dispatch initial "pageview" event');
+	t.false(isEmpty(localStorage), 'generates unique `cid` key in localStorage');
+	t.is(ctx.args.cid, localStorage[KEY], '~> and still stores it in instance');
+
+	t.end();
+});
 	});
 	// todo: ....
 });
