@@ -1,6 +1,6 @@
 # ganalytics [![Build Status](https://travis-ci.org/lukeed/ganalytics.svg?branch=master)](https://travis-ci.org/lukeed/ganalytics)
 
-> A tiny (323B) client-side module for tracking with Google Analytics
+> A tiny (312B) client-side module for tracking with Google Analytics
 
 This module exposes three module definitions:
 
