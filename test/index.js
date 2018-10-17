@@ -6,6 +6,19 @@ const KEY = 'ga:user';
 const isEmpty = x => Object.keys(x).length === 0;
 const isObject = x => Object.prototype.toString.call(x, '[object Object]');
 
+function isData(t, tid, evt, obj={}) {
+	let src = _SENT_.src;
+	t.ok(src, '~> used an Image and set `src` attribute');
+	t.true(src.startsWith('https://www.google-analytics.com/collect?v=1'), '~~> sent to Google-Analytics API');
+	t.true(src.includes(`&tid=${tid}`), '~~> includes the UA idenfitifer (`tid`)');
+	t.true(src.includes(`&t=${evt}`), `~~> includes the event type: "${evt}" (\`t\`)`);
+	t.true(src.includes(`&cid=${localStorage[KEY]}`), '~~> includes the generated user-idenfitifer (`cid`)');
+	t.true(src.includes('&z='), '~~> includes unique timestamp (`z` cache-buster)');
+	for (let k in obj) {
+		t.true(src.includes(`&${k}=${encodeURIComponent(obj[k])}`), `~~> includes the encoded(?) \`${k}\` value`);
+	}
+}
+
 test('exports', t => {
 	t.is(typeof GA, 'function', 'exports a function');
 
@@ -64,18 +77,12 @@ test('ga.send :: oncreate', t => {
 	t.true(isEmpty(localStorage), '(reset localStorage)');
 
 	GA('UA-STRING');
-
 	t.false(isEmpty(_SENT_), 'GA instance sent data immediately');
 
-	let src = _SENT_.src;
-	t.ok(src, '~> used an Image and set `src` attribute');
-	t.true(src.startsWith('https://www.google-analytics.com/collect?v=1'), '~~> sent to Google-Analytics API');
-	t.true(src.includes('&tid=UA-STRING'), '~~> includes the UA idenfitifer (`tid`)');
-	t.true(src.includes('&t=pageview'), '~~> includes the event type: "pageview" (`t`)');
-	t.true(src.includes(`&cid=${localStorage[KEY]}`), '~~> includes the generated user-idenfitifer (`cid`)');
-	t.true(src.includes('&z='), '~~> includes unique timestamp (`z` cache-buster)');
-	t.true(src.includes(`&dt=${encodeURIComponent(document.title)}`), '~~> includes the `document.title` value (`dt`)');
-	t.true(src.includes(`&dl=${encodeURIComponent(location.href)}`), '~~> includes the `location.href` value (`dl`)');
+	isData(t, 'UA-STRING', 'pageview', {
+		dt: document.title,
+		dl: location.href
+	});
 
 	t.end();
 });
