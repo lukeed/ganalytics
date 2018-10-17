@@ -2,8 +2,11 @@ var KEY = 'ga:user';
 
 export default function (ua, args, toWait) {
 	args = args || {};
-	var cid = (localStorage[KEY] = localStorage[KEY] || Math.random() + '.' + Math.random());
-	Object.assign(args, { tid:ua, cid });
+
+	Object.assign(args, {
+		tid: ua,
+		cid: (localStorage[KEY] = localStorage[KEY] || Math.random() + '.' + Math.random())
+	});
 
 	function send(type, opts) {
 		if (type === 'pageview' && !opts) {
