@@ -1,9 +1,7 @@
 var KEY = 'ga:user';
 
 export default function (ua, args, toWait) {
-	args = args || {};
-
-	Object.assign(args, {
+	args = Object.assign({}, args, {
 		tid: ua,
 		cid: (localStorage[KEY] = localStorage[KEY] || Math.random() + '.' + Math.random())
 	});
