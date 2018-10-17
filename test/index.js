@@ -101,6 +101,41 @@ test('ga.send :: toWait', t => {
 
 	t.end();
 });
-	});
-	// todo: ....
+
+test('ga.send', t => {
+	global._SENT_ = {}; // reset
+	global.localStorage = {}; // reset
+
+	t.true(isEmpty(_SENT_), '(reset _SENT_)');
+	t.true(isEmpty(localStorage), '(reset localStorage)');
+
+	let foo = GA('UA-STRING', null, true);
+
+	global.document.title = 'Custom Events';
+	global.location.href = 'http://example.com/custom-events';
+
+	console.log(' '); // spacer
+
+	let data = {
+		ec: 'Video',
+		el:'Home Hero',
+		ea: 'Play'
+	};
+
+	foo.send('event', data);
+	isData(t, 'UA-STRING', 'event', data);
+
+	t.false(_SENT_.src.includes(`&dt=`), '~~> does NOT auto-include the `document.title` when options are passed (`dt`)');
+	t.false(_SENT_.src.includes(`&dl=`), '~~> does NOT auto-include the `location.href` when options are passed (`dl`)');
+
+	console.log(' ');	// spacer
+
+	data = { dp: '/hello-world' };
+	foo.send('pageview', data);
+	isData(t, 'UA-STRING', 'pageview', data);
+
+	t.false(_SENT_.src.includes(`&dt=`), '~~> does NOT auto-include the `document.title` when options are passed (`dt`)');
+	t.false(_SENT_.src.includes(`&dl=`), '~~> does NOT auto-include the `location.href` when options are passed (`dl`)');
+
+	t.end();
 });
