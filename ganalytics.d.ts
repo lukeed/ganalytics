@@ -1,21 +1,25 @@
 declare module "ganalytics" {
-	export type EventType = "event" | "social" | "pageview" | "exception" | "item" | "screenview" | "timing" | "transaction";
-
 	export type Number = string | number;
 	export type Boolean = 1 | 0 | '1' | '0';
 
 	export type ProductAction = 'detail' | 'click' | 'add' | 'remove' | 'checkout' | 'checkout_option' | 'purchase' | 'refund';
 
+	export interface EventMap {
+		'event': EventParams,
+		'social': SocialParams,
+		'pageview': CommonParams,
+		'exception': ExceptionParams,
+		'screenview': ScreenviewParams,
+		'transaction': TransactionParams,
+		'timing': TimingParams,
+		'item': ItemParams,
+	}
+
+	export type EventOptional = 'pageview' | 'exception' | 'screenview';
+
 	export interface GAnalytics {
-		send(kind:       "event", params:       EventParams): void;
-		send(kind:      "social", params:      SocialParams): void;
-		send(kind:    "pageview", params:      CommonParams): void;
-		send(kind:   "exception", params:   ExceptionParams): void;
-		send(kind:        "item", params:        ItemParams): void;
-		send(kind:  "screenview", params:  ScreenviewParams): void;
-		send(kind:      "timing", params:      TimingParams): void;
-		send(kind: "transaction", params: TransactionParams): void;
-		send(kind:     EventType, params?:           object): void;
+		send<K extends keyof EventMap>(type: K, params: EventMap[K]): void;
+		send(type: EventOptional): void;
 	}
 
 	export interface CommonParams {
