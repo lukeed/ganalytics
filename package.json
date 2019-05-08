@@ -23,6 +23,7 @@
     "test": "tape test/*.js | tap-spec"
   },
   "files": [
+    "*.d.ts",
     "dist"
   ],
   "keywords": [
