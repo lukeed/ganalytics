@@ -46,10 +46,19 @@ declare module "ganalytics" {
 
 		/**
 		 * The application or site owner's known identifier for the user.
+		 * @note This becomes required if `cid` is not defined.
 		 * @see https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#uid
 		 * @example 'as8eknlll', 'foobar'
 		 */
 		uid?: string;
+
+		/**
+		 * The application or site owner's generated identifier for the client device.
+		 * @note This becomes required if `uid` is not defined.
+		 * @see https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#cid
+		 * @example 'as8eknlll', 'foobar'
+		 */
+		cid?: string;
 
 		/**
 		 * Control the session duration. The session will begin or end with this hit.

@@ -43,6 +43,13 @@ Type: `String`
 
 Your Google Analytics tracker ID; eg `UA-XXXXXXXX-X`
 
+#### options
+Type: `Object`
+
+Any common, [general options](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#general) that this instance should hold onto.
+
+> **Note:** Any `option` key can be redefined or overwritten within a `send()` call.
+
 #### options.aip
 Type: `Integer`<br>
 Default: `0`
@@ -68,6 +75,21 @@ Specifies the application installer identifier. See [Application Installer ID](h
 Type: `String`
 
 Specifies the application verison. See [Application Version](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#av).
+
+
+#### options.cid
+Type: `String`
+
+Anonymously identify a particular user, device, or browser instance. This should be persisted so that repetitive session use the same identifier. See [Client ID](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#cid).
+
+> **Important** This is required when `options.uid` is not defined.
+
+#### options.uid
+Type: `String`
+
+An identifier for a known user, if possible. This value should never be persisted. See [User ID](https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters#uid).
+
+> **Important** This is required when `options.cid` is not defined.
 
 #### options.ds
 Type: `String`
