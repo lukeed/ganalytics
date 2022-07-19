@@ -1,4 +1,4 @@
-export default (ua, args, toWait) => {
+export default function (ua, args, toWait) {
 	args = {
 		...args,
 		tid: ua,
